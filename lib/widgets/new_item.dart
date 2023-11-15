@@ -1,4 +1,8 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+
 import 'package:shopping/data/categories.dart';
 import 'package:shopping/models/category.dart';
 import 'package:shopping/models/grocery_item_model.dart';
@@ -24,13 +28,26 @@ class _NewItemState extends State<NewItem> {
       _formKey.currentState!.save();
     } //will trigger the 'onSaved' function
 
-    Navigator.of(context).pop(
-      GroceryItem(
-      id: DateTime.now().toString(), 
-      name: _enteredName, 
-      quantity: _enteredQuantity, 
-      category: _selectedCategory)
-    ); //how we're passing new grocery item to the grocery list page. popping the screen off and sending information to parent page
+    final url = Uri.https(
+        'flutter-shopping-list-4d113-default-rtdb.firebaseio.com',
+        'shopping-list.json'); //creating a url
+    http.post(url,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: json.encode(
+          {
+            'name': _enteredName,
+            'quantity': _enteredQuantity,
+            'category': _selectedCategory.title,
+          },
+        ));
+    // Navigator.of(context).pop(GroceryItem(
+    //     id: DateTime.now().toString(),
+    //     name: _enteredName,
+    //     quantity: _enteredQuantity,
+    //     category:
+    //         _selectedCategory)); //how we're passing new grocery item to the grocery list page. popping the screen off and sending information to parent page
   }
 
   @override
