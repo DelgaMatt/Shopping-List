@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shopping/data/categories.dart';
 import 'package:shopping/models/category.dart';
+import 'package:shopping/models/grocery_item_model.dart';
 
 class NewItem extends StatefulWidget {
   const NewItem({super.key});
@@ -22,6 +23,14 @@ class _NewItemState extends State<NewItem> {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
     } //will trigger the 'onSaved' function
+
+    Navigator.of(context).pop(
+      GroceryItem(
+      id: DateTime.now().toString(), 
+      name: _enteredName, 
+      quantity: _enteredQuantity, 
+      category: _selectedCategory)
+    ); //how we're passing new grocery item to the grocery list page. popping the screen off and sending information to parent page
   }
 
   @override
