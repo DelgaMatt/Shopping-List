@@ -25,20 +25,29 @@ class _GroceryListState extends State<GroceryList> {
       return;
     }
 
-    setState(() { //setting state because now we want to use this new item in our ui, so we want to call the build method again
+    setState(() {
+      //setting state because now we want to use this new item in our ui, so we want to call the build method again
       _groceryItems.add(newItem);
     });
-    
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Your Grocery List'),
-        actions: [IconButton(onPressed: _addItem, icon: const Icon(Icons.add))],
+    Widget content = Center(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text('Nothing here yet!',
+              style: Theme.of(context)
+                  .textTheme
+                  .headlineMedium!
+                  .copyWith(color: Theme.of(context).colorScheme.onBackground)),
+        ],
       ),
-      body: ListView.builder(
+    );
+
+    if (_groceryItems.isNotEmpty) {
+      content = ListView.builder(
         itemCount: _groceryItems.length,
         itemBuilder: (ctx, index) => ListTile(
           title: Text(_groceryItems[index].name),
@@ -51,7 +60,15 @@ class _GroceryListState extends State<GroceryList> {
             _groceryItems[index].quantity.toString(),
           ),
         ),
+      );
+    }
+
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Your Grocery List'),
+        actions: [IconButton(onPressed: _addItem, icon: const Icon(Icons.add))],
       ),
+      body: content
     );
   }
 }
