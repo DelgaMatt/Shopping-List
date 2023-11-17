@@ -7,7 +7,7 @@
   [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
   ## Description
-  A mobile application which allows a user to create a shopping list. The application is connected to and stores 
+  A mobile application which allows a user to create a shopping list. The application is connected to and stores user input in a firebase backend.
   ## Table of Contents
   - [Usage](#usage)
   - [Contribute](#contributing)
